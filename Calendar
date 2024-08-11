@@ -1,0 +1,55 @@
+(function() {
+    // Função para atualizar dia, semana, estação e ano
+    function updateTime() {
+        const hours = $gameVariables.value(1);
+        const minutes = $gameVariables.value(2);
+        const seconds = $gameVariables.value(3);
+        
+        if (hours === 0 && minutes === 1 && seconds === 30) {
+            $gameVariables.setValue(4, $gameVariables.value(4) + 1); // Days
+            $gameVariables.setValue(5, $gameVariables.value(5) + 1); // Weekday
+            
+            // Atualiza a semana e a estação
+            if ($gameVariables.value(5) > 7) {
+                $gameVariables.setValue(5, 1);
+                $gameVariables.setValue(6, $gameVariables.value(6) + 1); // Week
+            }
+            if ($gameVariables.value(6) > 4) {
+                $gameVariables.setValue(6, 1);
+                $gameVariables.setValue(7, $gameVariables.value(7) + 1); // Season
+            }
+            if ($gameVariables.value(7) > 4) {
+                $gameVariables.setValue(7, 1);
+                $gameVariables.setValue(8, $gameVariables.value(8) + 1); // Year
+            }
+            
+            // Define o máximo da semana para o gauge
+            $gameVariables.setValue(18, 4);
+        }
+    }
+
+    // Função para atualizar os switches de dia da semana
+    function updateWeekdaySwitches() {
+        const weekday = $gameVariables.value(5);
+        const switches = [2, 3, 4, 5, 6, 7, 8];
+        
+        for (let i = 0; i < switches.length; i++) {
+            $gameSwitches.setValue(switches[i], i + 1 === weekday);
+        }
+    }
+
+    // Função para atualizar os switches de estação
+    function updateSeasonSwitches() {
+        const season = $gameVariables.value(7);
+        const seasonSwitches = [10, 11, 12, 13];
+
+        for (let i = 0; i < seasonSwitches.length; i++) {
+            $gameSwitches.setValue(seasonSwitches[i], i + 1 === season);
+        }
+    }
+
+    // Atualiza todas as variáveis e switches
+    updateTime();
+    updateWeekdaySwitches();
+    updateSeasonSwitches();
+})();
