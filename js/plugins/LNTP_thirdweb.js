@@ -12,21 +12,21 @@
  * Comandos:
  * - Plugin Command: ConnectWallet
  * - Script Call: LNTP_connectWallet();
- *
- * @command ConnectWallet
- * @text Conectar Carteira
- * @desc Conecta a carteira do jogador via Web3.
  */
 
 (() => {
     // URL para o SDK da Thirdweb
-    const thirdwebScriptUrl = "https://unpkg.com/@thirdweb-dev/sdk@latest/dist/thirdweb.min.js";
+    const thirdwebScriptUrl = "https://unpkg.com/@thirdweb-dev/sdk@latest/dist/browser.umd.min.js";
 
     // Função para carregar o SDK da Thirdweb
     function loadThirdwebSDK(callback) {
         const script = document.createElement("script");
         script.src = thirdwebScriptUrl;
         script.onload = callback;
+        script.onerror = () => {
+            console.error("Erro ao carregar o SDK da Thirdweb.");
+            $gameMessage.add("Erro ao carregar o SDK da Thirdweb.");
+        };
         document.body.appendChild(script);
     }
 
